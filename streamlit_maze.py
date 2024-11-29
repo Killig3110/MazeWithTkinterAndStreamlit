@@ -12,8 +12,7 @@ ALGORITHMS = {
     "DFS": solve_dfs,
     "A*": solve_astar,
     "Greedy": solve_greedy,
-    "Uniform Cost": solve_uniform_cost,
-    "IDS": solve_ids,
+    "Uniform Cost": solve_uniform_cost
 }
 
 # Cấu hình mặc định

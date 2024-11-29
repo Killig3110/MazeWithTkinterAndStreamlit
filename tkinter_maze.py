@@ -10,8 +10,7 @@ ALGORITHMS = {
     "DFS": solve_dfs,
     "A*": solve_astar,
     "Greedy": solve_greedy,
-    "Uniform Cost": solve_uniform_cost,
-    "IDS": solve_ids,
+    "Uniform Cost": solve_uniform_cost
 }
 
 running_algorithm = False  # Global variable to track if the algorithm is running
@@ -33,6 +32,7 @@ def start_tkinter_gui():
     cols = len(maze[0])
     canvas_width = cols * cell_size
     canvas_height = rows * cell_size
+    steps_count = 0
 
     root.geometry(f"{canvas_width+100}x{canvas_height+150}")
 
@@ -123,6 +123,13 @@ def start_tkinter_gui():
 
     canvas.bind("<Button-1>", on_canvas_click)
 
+    def on_algorithm_change(*args):
+        status_label.config(text=f"Thuật toán hiện tại: {algorithm_var.get()}")
+        canvas.delete("all")
+        solve_button.config(state="normal")
+        stop_button.config(state="disabled")
+        draw_maze()
+
     def stop_algorithm():
         global running_algorithm
         running_algorithm = False  # Đặt flag về False để dừng thuật toán
@@ -131,7 +138,12 @@ def start_tkinter_gui():
         stop_button.config(state="disabled")
 
     def solve_maze():
-        global running_algorithm, steps_count
+        global running_algorithm, steps_count, solved, search_steps
+        steps_count = 0  # Đặt lại số bước đi
+        search_steps = []  # Xóa trạng thái đã duyệt
+        solved = False  # Đặt lại trạng thái giải xong
+        canvas.delete("all")  # Xóa canvas cũ
+        draw_maze()  # Vẽ lại mê cung ban đầu
         try:
             if start_point is None or goal_point is None:
                 raise ValueError("Hãy chọn điểm bắt đầu và điểm kết thúc trước!")
@@ -179,6 +191,8 @@ def start_tkinter_gui():
     algorithm_var = tk.StringVar(value="BFS")
     algorithm_menu = tk.OptionMenu(root, algorithm_var, *ALGORITHMS.keys())
     algorithm_menu.pack()
+    # Gắn callback vào StringVar khi giá trị thay đổi
+    algorithm_var.trace("w", on_algorithm_change)
 
     # Tạo một Frame cho các nút và thanh trượt
     control_frame = tk.Frame(root, bg="#f5f5f5")
