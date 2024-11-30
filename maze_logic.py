@@ -1,7 +1,7 @@
 import math
 from simpleai.search import SearchProblem, breadth_first, depth_first, astar, greedy, uniform_cost, iterative_limited_depth_first
 
-# Define cost of moving around the map
+# Định nghĩa các hướng di chuyển và chi phí tương ứng
 COSTS = {
     "up": 1.0,
     "down": 1.0,
@@ -66,7 +66,7 @@ class MazeSolver(SearchProblem):
         gx, gy = self.goal
         return math.sqrt((x - gx) ** 2 + (y - gy) ** 2)
 
-# Wrapper functions for different algorithms
+# Hàm giải mê cung với các thuật toán tìm kiếm
 def solve_bfs(solver, use_graph_search=True):
     return breadth_first(solver, graph_search=use_graph_search)
 
