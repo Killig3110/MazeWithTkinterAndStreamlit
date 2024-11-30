@@ -13,8 +13,8 @@ ALGORITHMS = {
     "Uniform Cost": solve_uniform_cost
 }
 
-running_algorithm = False  # Global variable to track if the algorithm is running
-steps_count = 0  # Global steps counter
+running_algorithm = False  # Biến kiểm tra thuật toán đang chạy
+steps_count = 0  # Biến đếm số bước đi
 
 def start_tkinter_gui():
     root = tk.Tk()
